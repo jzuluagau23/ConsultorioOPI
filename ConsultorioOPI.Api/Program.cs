@@ -12,14 +12,16 @@ builder.Services.AddDbContext<ConsultorioOPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultorioOPIDB")));
 
 
-//Services
+//DI Services
 builder.Services.AddScoped<IMedicoService, MedicoService>();
 builder.Services.AddScoped<IPacienteService, PacienteService>();
+builder.Services.AddScoped<ITurnoService, TurnoService>();
 
 
-//Repositories
+//DI Repositories
 builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+builder.Services.AddScoped<ITurnoRepository, TurnoRepository>();
 
 // Add services to the container.
 builder.Services.AddControllers();
