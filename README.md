@@ -46,6 +46,20 @@ Scaffold-DbContext -Connection name=ConsultorioOPIDB -Provider Microsoft.EntityF
 ### Pruebas 
 dotnet test
 
+
+# 🚀 Estrategia de Versionamiento Semántico Automatizado
+
+Este proyecto aplica [SemVer (Semantic Versioning)](https://semver.org/lang/es/) y convenciones de commits para generar automáticamente versiones y changelogs a partir del historial de Git.
+
+## Esquema de versión
+Usamos el formato `MAJOR.MINOR.PATCH`, por ejemplo: `1.4.2`
+
+| Tipo    | Cuándo se incrementa                          |
+|---------|-----------------------------------------------|
+| MAJOR   | Cambios incompatibles (breaking changes)      |
+| MINOR   | Nuevas funcionalidades retrocompatibles       |
+| PATCH   | Corrección de errores o mejoras menores       |
+
 ## Autor
 Juan Camilo Zuluaga 
 jzuluagau23@hotmail.com
