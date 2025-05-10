@@ -46,6 +46,8 @@ Scaffold-DbContext -Connection name=ConsultorioOPIDB -Provider Microsoft.EntityF
 ### Pruebas 
 dotnet test
 
+### Publicación 
+dotnet publish
 
 # 🚀 Estrategia de Versionamiento Semántico Automatizado
 
