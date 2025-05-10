@@ -1,5 +1,6 @@
 ﻿using ConsultorioOPI.Domain.Dto;
 using ConsultorioOPI.Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConsultorioOPI.Api.Controllers
@@ -28,6 +29,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="id">Identificador del turno.</param>
         /// <returns>Retorna el turno si existe, de lo contrario NotFound.</returns>
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var turno = await _service.GetByIdAsync(id);
@@ -40,13 +42,16 @@ namespace ConsultorioOPI.Api.Controllers
         /// </summary>
         /// <returns>Lista de turnos.</returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
+
         /// <summary>
         /// Obtiene todos los turnos registrados a un medico
         /// </summary>
         /// <param name="pacienteId"></param>
         /// <returns>Lista de turnos.</returns>
         [HttpGet("por-paciente/{pacienteId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTurnosByPaciente(int pacienteId)
         {
             var result = await _service.GetTurnosByPacienteAsync(pacienteId);
@@ -59,6 +64,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="medicoId"></param>
         /// <returns>Lista de turnos.</returns>
         [HttpGet("por-medico/{medicoId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetTurnosByMedico(int medicoId)
         {
             var result = await _service.GetTurnosByMedicoAsync(medicoId);
@@ -72,8 +78,10 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="turno">Datos del turno a crear.</param>
         /// <returns>Turno creado con su identificador.</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(TurnoDto turno)
         {
+            turno.EstadoId = 1; //"Agendado"
             var created = await _service.CreateAsync(turno);
             return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
@@ -85,6 +93,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="turno">Datos actualizados del turno.</param>
         /// <returns>Resultado de la operación de actualización.</returns>
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, TurnoDto turno)
         {
             if (id != turno.Id) return BadRequest();
@@ -98,6 +107,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="id">Identificador del turno a eliminar.</param>
         /// <returns>NoContent si se eliminó correctamente, NotFound si no existe.</returns>
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);

@@ -1,5 +1,6 @@
 ﻿using ConsultorioOPI.Domain.Dto;
 using ConsultorioOPI.Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConsultorioOPI.Api.Controllers
@@ -28,6 +29,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="id">Identificador del paciente.</param>
         /// <returns>Retorna el paciente si existe, de lo contrario NotFound.</returns>
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var paciente = await _service.GetByIdAsync(id);
@@ -40,6 +42,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// </summary>
         /// <returns>Lista de pacientes.</returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
 
         /// <summary>
@@ -48,6 +51,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="paciente">Datos del paciente a crear.</param>
         /// <returns>Paciente creado con su identificador.</returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create(PacienteDto paciente)
         {
             var created = await _service.CreateAsync(paciente);
@@ -61,6 +65,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="paciente">Datos actualizados del paciente.</param>
         /// <returns>Resultado de la operación de actualización.</returns>
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, PacienteDto paciente)
         {
             if (id != paciente.Id) return BadRequest();
@@ -74,6 +79,7 @@ namespace ConsultorioOPI.Api.Controllers
         /// <param name="id">Identificador del paciente a eliminar.</param>
         /// <returns>NoContent si se eliminó correctamente, NotFound si no existe.</returns>
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
