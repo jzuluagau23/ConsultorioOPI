@@ -18,10 +18,6 @@ namespace ConsultorioOPI.Logic.Maping
             CreateMap<Paciente, PacienteDto>().ReverseMap();
             CreateMap<Turno, TurnoDto>().ReverseMap();
             CreateMap<TurnoMedicoPacienteEntity, TurnoMedicoPacienteDto>().ReverseMap();
-
-            CreateMap<MedicoDto, Medico>().ReverseMap();
-            CreateMap<PacienteDto, Paciente>().ReverseMap();
-            CreateMap<TurnoDto, Turno>().ReverseMap();
         }
     }
 }
